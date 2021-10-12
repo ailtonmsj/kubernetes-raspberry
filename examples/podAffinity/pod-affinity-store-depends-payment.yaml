@@ -1,0 +1,50 @@
+---
+# Deploy a single Pod per Node where is need a Pod with label "app=payment"
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: store
+  name: store
+  namespace: pod-affinity
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: store
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: store
+    spec:
+      # Deploy only where exists a labeled pod with app=payment
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - payment
+            # Act like creating a group by this label value ( like a AND conditional on Anti-Affinity )
+            topologyKey: kubernetes.io/hostname  # Group per hostname name ( If has 2, one in each Node with this label value with diferent value)
+#           topologyKey: nodePool # Group per nodePool, in this example, the Nodes has the same value for this, so a single pod with be create in whole cluster
+        # Only a single Store Pod per Node
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - store
+            # Act like creating a group by this label value ( like a AND conditional on Anti-Affinity )
+            topologyKey: kubernetes.io/hostname  # Group per hostname name ( If has 2, one in each Node with this label value with diferent value)
+#           topologyKey: nodePool  # Group per nodePool, in this example, the Nodes has the same value for this, so a single pod with be create in whole cluster
+      containers:
+      - image: nginx
+        name: nginx
+...

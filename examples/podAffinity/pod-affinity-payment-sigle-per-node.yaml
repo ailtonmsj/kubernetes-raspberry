@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: payment
+  name: payment
+  namespace: pod-affinity
+spec:
+  # Set to a number greater than cluster nodes
+  replicas: 3
+  selector:
+    matchLabels:
+      app: payment
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: payment
+    spec:
+      affinity:
+        # Alow only one pod per node
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app 
+                operator: In
+                values:
+                - payment
+            # label in Node, Used to group in Affinity, in this case must 
+            # have a diferent value per node to create a single Pod to Node
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - image: nginx
+        name: nginx
+...
