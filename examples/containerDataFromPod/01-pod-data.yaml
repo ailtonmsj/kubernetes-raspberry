@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: pod-data
+  name: pod-data
+  namespace: container-data-from-pod
+spec:
+  containers:
+  - image: nginx
+    name: pod-data
+    resources: {}
+    env:
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    command:
+    - sh
+    - -c
+    - printenv POD_NAME NAMESPACE
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}

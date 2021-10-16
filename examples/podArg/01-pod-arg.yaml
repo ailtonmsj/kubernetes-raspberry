@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: pod-arg
+  name: pod-arg
+  namespace: pod-arg
+spec:
+  containers:
+  - name: container-arg
+    image: busybox
+    command: [ printenv ]
+    args:
+    - "HOSTNAME"
+    - "USER"
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}

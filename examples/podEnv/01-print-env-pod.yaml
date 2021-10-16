@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: print-env
+  name: print-env
+  namespace: pod-env
+spec:
+  containers:
+  - command:
+    - sh
+    - -c
+    - printenv BATATA
+    image: busybox
+    name: print-env
+    env:
+    - name: BATATA
+      value: "Fixed value"
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

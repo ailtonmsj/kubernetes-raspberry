@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  ENV: DEV
+  LOG_LEVEL: INFO
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: env-configs
+  namespace: config-map-test
