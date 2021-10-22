@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: example-ingress-httpd
+  name: example-ingress-httpd
+  namespace: ingress-test
+spec:
+  containers:
+  - image: httpd
+    name: example-ingress-httpd
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
