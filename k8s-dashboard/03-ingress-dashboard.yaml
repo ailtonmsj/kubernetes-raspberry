@@ -17,6 +17,9 @@ spec:
               name: kubernetes-dashboard
               port:
                 number: 443
-    host: k8s-dashboard.teste.com.br # host to kubernetes dashboard
-
-      
+    host: k8s-dashboard.teste.com.br  # REMOVE this to redirect all requests for this ingress for dashboard OR 
+                                      # set/add a DNS configuration to kubernetes dashboard on /etc/hosts, example:
+                                      #
+                                      # 192.168.0.100 k8s-dashboard.teste.com.br
+                                      # 192.168.0.101 k8s-dashboard.teste.com.br
+                                      # 192.168.0.102 k8s-dashboard.teste.com.br
