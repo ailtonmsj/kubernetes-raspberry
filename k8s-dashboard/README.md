@@ -14,3 +14,5 @@ kubectl -n kubernetes-dashboard get secret KUBERNETES-DASHBOARD-TOKEN-NAME -o js
 ```bash
 kubectl -n kubernetes-dashboard get secret kubernetes-dashboard-token-vzfmr -o jsonpath={.data.token} | base64 --decode
 ```
+
+### For this example is needed use the admin token (admin-user), file 02-admin-configuration.yaml
