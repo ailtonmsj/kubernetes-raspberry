@@ -6,6 +6,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/rewrite-target: /
+#    cert-manager.io/issuer: "selfsigned-issuer"
 spec:
   rules:
   - http:
@@ -23,3 +24,8 @@ spec:
                                       # 192.168.0.100 k8s-dashboard.teste.com.br
                                       # 192.168.0.101 k8s-dashboard.teste.com.br
                                       # 192.168.0.102 k8s-dashboard.teste.com.br
+# TO ENABLE TLS ON INGRESS
+  tls:
+    - hosts:
+      - k8s-dashboard.teste.com.br
+      secretName: k8s-dashboard.teste.com.br # MUST BE CREATE A SECRET TLS / CERTIFICATE
