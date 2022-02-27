@@ -1,0 +1,10 @@
+# To create a Issuer than use the selfsigned CA
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: test-selfsigned
+  namespace: cert-manager-selfsigned
+spec:
+  ca:
+    secretName: selfsigned-root-secret
+---

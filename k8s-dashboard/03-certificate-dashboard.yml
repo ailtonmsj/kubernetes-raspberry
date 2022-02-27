@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: k8s-dashboard.teste.com.br
+  namespace: kubernetes-dashboard
+spec:
+  dnsNames:
+    - k8s-dashboard.teste.com.br
+  secretName: k8s-dashboard.teste.com.br
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io

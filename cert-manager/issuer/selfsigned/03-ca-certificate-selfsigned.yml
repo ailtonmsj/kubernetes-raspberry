@@ -1,0 +1,18 @@
+# To create a selfsigned CA
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: selfsigned-ca
+  namespace: cert-manager-selfsigned
+spec:
+  isCA: true
+  commonName: selfsigned-ca
+  secretName: selfsigned-root-secret
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+---
