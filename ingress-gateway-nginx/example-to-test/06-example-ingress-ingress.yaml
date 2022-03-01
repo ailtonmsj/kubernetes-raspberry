@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
   name: example-ingress
   namespace: ingress-test
 spec:
@@ -23,7 +24,7 @@ spec:
               number: 80
         path: /nginx
         pathType: Prefix
-    host: "teste-ingress.teste.com.br"  # usar esse DNS para conseguir direcionar, exemplo
+    #host: "teste-ingress.teste.com.br"  # usar esse DNS para conseguir direcionar, exemplo
                                         # http://teste-ingress.teste.com.br:30900/httpd
                                         # esse valor esta resolvendo 192.168.0.100, 192.168.0.101 e 192.168.0.102
                                         # configurado no /etc/hosts
