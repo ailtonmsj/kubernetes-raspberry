@@ -6,7 +6,6 @@
 ## Ingress Gateway
 ### Ingress Gateway using Ngnix to expose the K8s cluster
 
-
 ## Kubernetes Dashboard
 ### K8s Dashboard ( default )
 

@@ -1,15 +1,10 @@
 apiVersion: v1
-kind: Namespace
-metadata:
-  name: metrics-server
----
-apiVersion: v1
 kind: ServiceAccount
 metadata:
   labels:
     k8s-app: metrics-server
   name: metrics-server
-  namespace: metrics-server
+  namespace: kube-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -41,11 +36,14 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - nodes/metrics
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resources:
   - pods
   - nodes
-  - nodes/stats
-  - namespaces
-  - configmaps
   verbs:
   - get
   - list
@@ -57,7 +55,7 @@ metadata:
   labels:
     k8s-app: metrics-server
   name: metrics-server-auth-reader
-  namespace: metrics-server
+  namespace: kube-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -65,7 +63,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: metrics-server
-  namespace: metrics-server
+  namespace: kube-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -80,7 +78,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: metrics-server
-  namespace: metrics-server
+  namespace: kube-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -95,7 +93,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: metrics-server
-  namespace: metrics-server
+  namespace: kube-system
 ---
 apiVersion: v1
 kind: Service
@@ -103,7 +101,7 @@ metadata:
   labels:
     k8s-app: metrics-server
   name: metrics-server
-  namespace: metrics-server
+  namespace: kube-system
 spec:
   ports:
   - name: https
@@ -119,7 +117,7 @@ metadata:
   labels:
     k8s-app: metrics-server
   name: metrics-server
-  namespace: metrics-server
+  namespace: kube-system
 spec:
   selector:
     matchLabels:
@@ -135,22 +133,23 @@ spec:
       containers:
       - args:
         - --cert-dir=/tmp
-        - --secure-port=443
+        - --secure-port=4443
         - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
         - --kubelet-use-node-status-port
         - --metric-resolution=15s
-        image: k8s.gcr.io/metrics-server/metrics-server:v0.5.0
+        - --kubelet-insecure-tls
+        image: k8s.gcr.io/metrics-server/metrics-server:v0.6.1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
           httpGet:
             path: /livez
             port: https
-            scheme: HTTP
+            scheme: HTTPS
           periodSeconds: 10
         name: metrics-server
         ports:
-        - containerPort: 443
+        - containerPort: 4443
           name: https
           protocol: TCP
         readinessProbe:
@@ -158,7 +157,7 @@ spec:
           httpGet:
             path: /readyz
             port: https
-            scheme: HTTP
+            scheme: HTTPS
           initialDelaySeconds: 20
           periodSeconds: 10
         resources:
@@ -166,6 +165,7 @@ spec:
             cpu: 100m
             memory: 200Mi
         securityContext:
+          allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
           runAsNonRoot: true
           runAsUser: 1000
@@ -192,6 +192,6 @@ spec:
   insecureSkipTLSVerify: true
   service:
     name: metrics-server
-    namespace: metrics-server
+    namespace: kube-system
   version: v1beta1
   versionPriority: 100
