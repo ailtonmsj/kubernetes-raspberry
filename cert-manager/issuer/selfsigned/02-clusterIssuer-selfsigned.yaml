@@ -1,4 +1,4 @@
-# To create a selfsigned Cluster Issuer
+# To create a selfsigned Cluster Issuer (Cluster Scoped)
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:

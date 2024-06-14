@@ -1,9 +1,8 @@
 # To create a Issuer than use the selfsigned CA
 apiVersion: cert-manager.io/v1
-kind: Issuer
+kind: ClusterIssuer
 metadata:
-  name: test-selfsigned
-  namespace: cert-manager-selfsigned
+  name: ca-issuer
 spec:
   ca:
     secretName: selfsigned-root-secret

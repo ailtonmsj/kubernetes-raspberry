@@ -7,17 +7,12 @@ kubectl create namespace cert-manager
   
 ## Add the Jeststack repo
 ```bash
-helm repo add jetstack https://charts.jetstack.io
-```
-  
-## Update helm repos
-```bash
-helm repo update
+helm repo add jetstack https://charts.jetstack.io --force-update
 ```
   
 ## Install cert-manager and CRDs from jetstack repo
 ```bash
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.4.0 --set installCRDs=true
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v1.15.0 --set crds.enabled=true
 ```
   
 ## Verify the installation
