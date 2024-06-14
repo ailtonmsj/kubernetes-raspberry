@@ -1,9 +1,3 @@
-# Two ways to install certmanager:
-
-## "Kubectl Way"
-
-### "apply" folder has a manisfests to install a cert-manager by kubectl apply
-
 ## "Helm Way"
 
 ### "helm" folder has the instructions to install cert-manager by helm 

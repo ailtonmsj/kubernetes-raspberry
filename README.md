@@ -1,3 +1,5 @@
+# main version compatibility Kubernetes 1.29
+
 ## Kubernetes configurations and examples for Tests
 
 ## CertManager

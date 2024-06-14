@@ -13,7 +13,7 @@ kubectl apply -f .
 
 ### To check the issuer:
 ```bash
-kubectl -n cert-manager-selfsigned get Clusterissuer
+kubectl get Clusterissuer
 ```
 ### Result:
 | NAME               | READY |  AGE |
@@ -22,16 +22,15 @@ kubectl -n cert-manager-selfsigned get Clusterissuer
 
 ### To check the Certificates:
 ```bash
-kubectl -n cert-manager-selfsigned get Certificate
+kubectl -n cert-managerget Certificate
 ```
 ### Result:
 | NAME             | READY  | SECRET                  | AGE  |
 | selfsigned-ca    | True   | selfsigned-root-secret  | 5m2s |
-| selfsigned-cert  | True   | selfsigned-cert-tls     | 7s   |
 
 ### To check the Secrets:
 ```bash
-kubectl -n cert-manager-selfsigned get secret
+kubectl -n cert-manager get secret
 ```
 ### Result:
 | NAME                   |  TYPE                  |  DATA  | AGE |
